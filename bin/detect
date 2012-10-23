@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-if [ -f $1/hello.txt ]; then
-  echo "GTK"
+if [ -x $1/bin/test ]; then
+  echo "Test"
   exit 0
-else
-  exit 1
 fi
+
+exit 1
