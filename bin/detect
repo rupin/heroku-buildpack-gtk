@@ -1,8 +1,9 @@
 #!/bin/sh
 
-if [ -x $1/bin/test ]; then
-  echo "Test"
+# this pack is valid for apps with a hello.txt in the root
+if [ -f $1/hello.txt ]; then
+  echo "GTK"
   exit 0
+else
+  exit 1
 fi
-
-exit 1
