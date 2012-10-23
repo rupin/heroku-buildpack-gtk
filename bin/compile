@@ -1,18 +1,26 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
 
-indent() {
-  sed -u 's/^/       /'
-}
+set -eo pipefail
 
-echo "-----> Found a hello.txt"
+# config
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
-# if hello.txt has contents, display them (indented to align)
-# otherwise error
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+ROOT_DIR=$(dirname $BIN_DIR)
+BUILD_DIR=$1
+CACHE_DIR=$2
 
-if [ ! -s $1/hello.txt ]; then
-  echo "hello.txt was empty"
-  exit 1
-else
-  echo "hello.txt is not empty, here are the contents" | indent
-  cat $1/hello.txt
-fi | indent
+
+echo "-------> Downloading and atk"
+ATK_URL='http://ftp.gnome.org/pub/gnome/sources/atk/2.4/atk-2.4.0.tar.xz'
+curl -sO "$ATK_URL"
+
+echo "-------> Unpacking and atk"
+tar -Jxf atk-2.4.0.tar.xz
+
+echo "-------> Configuring atk"
+cd atk-2.4.0
+./configure --disable-dependency-tracking --prefix=$LP_DIR --enable-introspection=no
+make
+make install
