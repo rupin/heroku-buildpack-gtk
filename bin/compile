@@ -11,9 +11,22 @@ ROOT_DIR=$(dirname $BIN_DIR)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+echo "-------> Downloading and glib"
+GLIB_URL="ftp://ftp.gnome.org/pub/gnome/sources/glib/2.32/glib-2.32.4.tar.xz"
+curl -sO "$GLIB_URL"
+
+echo "-------> Unpacking and glib"
+tar -Jxf glib-2.32.4.tar.xz
+
+echo "-------> Configuring glib"
+cd glib-2.32.4
+./configure --disable-maintainer-mode --disable-dependency-tracking --disable-dtrace --prefix=$LP_DIR
+make
+make install
+
 
 echo "-------> Downloading and atk"
-ATK_URL='http://ftp.gnome.org/pub/gnome/sources/atk/2.4/atk-2.4.0.tar.xz'
+ATK_URL="http://ftp.gnome.org/pub/gnome/sources/atk/2.4/atk-2.4.0.tar.xz"
 curl -sO "$ATK_URL"
 
 echo "-------> Unpacking and atk"
