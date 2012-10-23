@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cat << EOF
+---
+addons:
+  - shared-database:5mb
+config_vars:
+  NODE_ENV:production
+default_process_types:
+  web: bin/node server.js
+EOF
