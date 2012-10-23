@@ -1,2 +1,10 @@
-#!/bin/sh
-echo "--- {}"
+#!/usr/bin/env bash
+# bin/release <build-dir>
+
+BUILD_DIR=$1
+
+cat <<EOF
+---
+config_vars:
+  LD_LIBRARY_PATH: sw/lib
+EOF

@@ -1,51 +1,31 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-set -eo pipefail
+set -x
+set -e
+set -o pipefail
 
-# config
-LP_DIR=`cd $(dirname $0); cd ..; pwd`
-
-BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
-ROOT_DIR=$(dirname $BIN_DIR)
 BUILD_DIR=$1
 CACHE_DIR=$2
+export UBUNTU_URL=http://us.archive.ubuntu.com/ubuntu
 
-echo "-------> Downloading and libffi"
-LIBFFI_URL="http://mirrors.kernel.org/sources.redhat.com/libffi/libffi-3.0.11.tar.gz"
-curl -sO "$LIBFFI_URL"
+echo "DEB_PACKAGES: '$DEB_PACKAGES'"
 
-echo "-------> Unpacking and libffi"
-tar -zxf libffi-3.0.11.tar.gz
+download () {
+  DEB_PATH=$1
+  DEB_FILE=$(basename $DEB_PATH)
+  curl -vf $UBUNTU_URL/pool/$DEB_PATH > $DEB_FILE
+  dpkg-deb -X $DEB_FILE $BUILD_DIR/sw
+}
 
-echo "-------> Configuring libffi"
-cd libffi-3.0.11
-./configure --prefix=$LP_DIR --disable-debug --disable-dependency-tracking
-make install
+mkdir $BUILD_DIR/sw
 
-echo "-------> Downloading and glib"
-GLIB_URL="ftp://ftp.gnome.org/pub/gnome/sources/glib/2.32/glib-2.32.4.tar.xz"
-curl -sO "$GLIB_URL"
+download main/a/atk1.0/libatk1.0-0_1.30.0-0ubuntu2_amd64.deb
 
-echo "-------> Unpacking and glib"
-tar -Jxf glib-2.32.4.tar.xz
+find $BUILD_DIR/sw -type l -ls
 
-echo "-------> Configuring glib"
-cd glib-2.32.4
-./configure --disable-maintainer-mode --disable-dependency-tracking --disable-dtrace --prefix=$LP_DIR
-make
-make install
-
-
-echo "-------> Downloading and atk"
-ATK_URL="http://ftp.gnome.org/pub/gnome/sources/atk/2.4/atk-2.4.0.tar.xz"
-curl -sO "$ATK_URL"
-
-echo "-------> Unpacking and atk"
-tar -Jxf atk-2.4.0.tar.xz
-
-echo "-------> Configuring atk"
-cd atk-2.4.0
-./configure --disable-dependency-tracking --prefix=$LP_DIR --enable-introspection=no
-make
-make install
+export LDFLAGS="-L$BUILD_DIR/sw/lib -L$BUILD_DIR/sw/usr/lib"
+export CPPFLAGS="-I$BUILD_DIR/sw/usr/include"
+export GEM_HOME="$BUILD_DIR/gems"
+export GEM_PATH=""
+export PATH="$GEM_HOME/bin:$BUILD_DIR/sw/bin:$BUILD_DIR/sw/usr/bin:$PATH"
