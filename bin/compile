@@ -21,7 +21,9 @@ download () {
 mkdir $BUILD_DIR/sw
 
 download main/g/glib2.0/libglib2.0-0_2.24.0-0ubuntu4_amd64.deb
-download main/a/atk1.0/libatk1.0-dev_1.30.0-0ubuntu2_amd64.deb
+download main/g/gtk+3.0/libgtk-3-bin_3.16.7-0ubuntu3.3_amd64.deb
+
+
 
 find $BUILD_DIR/sw -type l -ls
 
