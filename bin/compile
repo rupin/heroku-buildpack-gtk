@@ -27,8 +27,6 @@ download universe/g/gerbv/gerbv_2.6.0-1_amd64.deb
 find $BUILD_DIR/sw -type l -ls
 
 export LDFLAGS="-L$BUILD_DIR/sw/lib -L$BUILD_DIR/sw/usr/lib"
-export PATH="$PATH:$BUILD_DIR/sw/usr/bin"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$BUILD_DIR/sw/usr/lib"
 export CPPFLAGS="-I$BUILD_DIR/sw/usr/include"
 export GEM_HOME="$BUILD_DIR/gems"
 export GEM_PATH=""

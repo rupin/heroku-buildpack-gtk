@@ -7,4 +7,6 @@ cat <<EOF
 ---
 config_vars:
   LD_LIBRARY_PATH: sw/lib
+  export PATH="$PATH:$BUILD_DIR/sw/usr/bin"
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$BUILD_DIR/sw/usr/lib"
 EOF
