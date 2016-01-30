@@ -15,7 +15,7 @@ download () {
   DEB_PATH=$1
   DEB_FILE=$(basename $DEB_PATH)
   curl -vf $UBUNTU_URL/pool/$DEB_PATH > $DEB_FILE
-  dpkg-deb -X $DEB_FILE $BUILD_DIR/sw
+  dpkg -i $DEB_FILE 
 }
 
 mkdir $BUILD_DIR/sw
