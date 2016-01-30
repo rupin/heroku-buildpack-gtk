@@ -15,17 +15,18 @@ download () {
   DEB_PATH=$1
   DEB_FILE=$(basename $DEB_PATH)
   curl -vf $UBUNTU_URL/pool/$DEB_PATH > $DEB_FILE
-  dpkg -i $DEB_FILE 
+  dpkg-deb -X $DEB_FILE $BUILD_DIR/sw
 }
 
 mkdir $BUILD_DIR/sw
 
-download universe/g/gerbv/gerbv_2.6.0-1_arm64.deb
+download universe/g/gerbv/gerbv_2.6.0-1_amd64.deb  
+
 
 
 find $BUILD_DIR/sw -type l -ls
 
-export LDFLAGS="-L$BUILD_DIR/sw/lib -L$BUILD_DIR/sw/usr/lib"
+export LDFLAGS="-L$BUILD_DIR/sw/usr/lib"
 export CPPFLAGS="-I$BUILD_DIR/sw/usr/include"
 export GEM_HOME="$BUILD_DIR/gems"
 export GEM_PATH=""
