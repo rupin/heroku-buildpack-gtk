@@ -20,14 +20,14 @@ download () {
 
 mkdir $BUILD_DIR/sw
 
-download universe/g/gerbv/gerbv_2.6.0-1_amd64.deb  
+download universe/g/gerbv/gerbv_2.6.0-1_amd64.deb
 
 
 
 find $BUILD_DIR/sw -type l -ls
 
-export LDFLAGS="-L$BUILD_DIR/sw/usr/lib -L$BUILD_DIR/sw/lib"
-export LD_LIBRARY_PATH="/sw/usr/lib"
+export LDFLAGS="-L$BUILD_DIR/sw/lib -L$BUILD_DIR/sw/usr/lib"
 export CPPFLAGS="-I$BUILD_DIR/sw/usr/include"
-export PATH="$BUILD_DIR/sw/usr/bin:$BUILD_DIR/sw/usr/bin:$PATH"
-
+export GEM_HOME="$BUILD_DIR/gems"
+export GEM_PATH=""
+export PATH="$GEM_HOME/bin:$BUILD_DIR/sw/bin:$BUILD_DIR/sw/usr/bin:$PATH"
