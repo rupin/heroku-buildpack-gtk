@@ -6,6 +6,6 @@ BUILD_DIR=$1
 cat <<EOF
 ---
 config_vars:
-  PATH="$PATH:$BUILD_DIR/sw/usr/bin"
-  LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$BUILD_DIR/sw/usr/lib"
+  PATH="bin:/usr/local/bin:/usr/bin:/bin:/app/sw/usr/bin"
+  LD_LIBRARY_PATH="app/sw/usr/lib"
 EOF
