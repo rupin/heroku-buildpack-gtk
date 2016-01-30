@@ -7,7 +7,7 @@ set -o pipefail
 
 BUILD_DIR=$1
 CACHE_DIR=$2
-export UBUNTU_URL=http://us.archive.ubuntu.com/ubuntu
+export UBUNTU_URL=http://old-releases.ubuntu.com/ubuntu/
 
 echo "DEB_PACKAGES: '$DEB_PACKAGES'"
 
@@ -20,9 +20,7 @@ download () {
 
 mkdir $BUILD_DIR/sw
 
-download main/g/glib2.0/libglib2.0-0_2.24.0-0ubuntu4_amd64.deb
-download main/g/gtk+3.0/libgtk-3-bin_3.16.7-0ubuntu3.3_amd64.deb
-
+download universe/g/gerbv/gerbv_2.6.0-1_arm64.deb
 
 
 find $BUILD_DIR/sw -type l -ls
